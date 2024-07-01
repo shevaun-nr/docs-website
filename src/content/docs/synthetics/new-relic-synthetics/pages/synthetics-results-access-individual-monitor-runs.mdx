@@ -34,6 +34,12 @@ To access your monitor's <DNT>**Results**</DNT>: Go to <DNT>**[one.newrelic.com 
   <DNT>**[one.newrelic.com > Synthetic monitoring](https://one.newrelic.com/synthetics-nerdlets)**</DNT> > (select a monitor) > <DNT>**Results**</DNT>: Use the <DNT>**Results**</DNT> page to locate interesting runs of your monitor for troubleshooting, and see where your monitors spend the most time.
 </figcaption>
 
+## View individual results [#individual]
+
+You can select individual results to view them in more detail. A failed check result will include the error message (such as <DoNotTranslate>**Server replied with "HTTP 500" error**</DoNotTranslate>), the script log and browser log (for browser monitors), and a full or partial [waterfall view](/docs/synthetics/new-relic-synthetics/using-monitors/viewing-monitor-results#understanding).
+
+You can use the error message, logs, and waterfall to troubleshoot a downtime incident. For example, a [301 redirect](http://en.wikipedia.org/wiki/HTTP_301) could link to a failing web page. The browser correctly executes the redirect, but the destination web page returns an error. 
+
 ## Use page functions [#using]
 
 The <DNT>**Results**</DNT> page supports the following features:

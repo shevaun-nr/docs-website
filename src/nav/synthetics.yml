@@ -75,8 +75,8 @@ pages:
         path: /docs/synthetics/synthetic-monitoring/administration/compare-page-load-performance-browser-synthetic-monitoring
       - title: Data privacy and security
         path: /docs/synthetics/synthetic-monitoring/getting-started/security-synthetic-monitoring
-      - title: CPM release notes
-        path: /docs/release-notes/synthetics-release-notes/containerized-private-minions-release-notes
+      - title: SJM release notes
+        path: /docs/release-notes/synthetics-release-notes/job-manager-release-notes/
   - title: Private locations
     pages:
       - title: Private locations overview
@@ -115,8 +115,6 @@ pages:
         path: /docs/synthetics/new-relic-synthetics/pages/synthetics-results-access-individual-monitor-runs
       - title: Resources page
         path: /docs/synthetics/synthetic-monitoring/pages/synthetic-monitoring-understand-load-times
-      - title: Failures page
-        path: /docs/synthetics/synthetic-monitoring/pages/synthetic-monitoring-troubleshoot-downtime
       - title: SLA report
         path: /docs/synthetics/synthetic-monitoring/pages/synthetic-monitoring-aggregate-monitor-metrics
   - title: API
