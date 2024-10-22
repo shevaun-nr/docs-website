@@ -58,7 +58,7 @@ You can view field definitions in [NerdGraph explorer](/docs/apis/nerdgraph/get-
     ```
     locations: {
       private: {
-        guid: LOCATION_ENTITY_GUID, 
+        guid: "LOCATION_ENTITY_GUID", 
         vsePassword: YOUR_VSE_PASSWORD
       }
     }
@@ -94,12 +94,65 @@ You can view field definitions in [NerdGraph explorer](/docs/apis/nerdgraph/get-
   </Collapser>
 
   <Collapser
+    id="period-attribute"
+    title="Define runtime fields"
+  >
+    The `RUNTIME` attribute defines the attributes of runtime for your non-ping monitors to execute in. These values are not required, but if they are not included the API will attempt to create a legacy runtime monitor.
+
+    For [simple browser monitors](#create-simple-browser-runtime):
+
+      * `RUNTIME_TYPE`: The runtime type used by your monitor. "CHROME_BROWSER" is the only accepted value (required).
+
+      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. "100" is the only accepted value (required).
+
+
+    For [scripted API monitors](#create-scripted-API-runtime):
+
+      * `RUNTIME_TYPE`: The runtime type used by your monitor. "NODE_API" is the only accepted value.
+
+      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. The only accepted value is `16.10`.
+
+      * `SCRIPT_LANGUAGE`: The language used in your monitor. "JAVASCRIPT" is the only accepted value.
+
+
+    For [scripted browser monitors](#create-scripted-browser-runtime):
+
+      * `RUNTIME_TYPE`: The runtime type used by your monitor. "CHROME_BROWSER" is the only accepted value.
+
+      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. "100" is the only accepted value.
+
+      * `SCRIPT_LANGUAGE`: The language used in your monitor. "JAVASCRIPT" is the only accepted value.
+
+
+    For [step monitors](#create-step-runtime):
+
+      * `RUNTIME_TYPE`: The runtime type used by your monitor. "CHROME_BROWSER" is the only accepted value.
+
+      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. "100" is the only accepted value.
+
+
+    For [certificate check monitors](#create-certificate-check-runtime):
+
+      * `RUNTIME_TYPE`: The runtime type used by your monitor. "NODE_API" is the only accepted value.
+
+      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. The only accepted value is `16.10`.
+
+
+    For [broken link monitors](#create-broken-links-runtime):
+
+      * `RUNTIME_TYPE`: The runtime type used by your monitor. "NODE_API" is the only accepted value.
+
+      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. The only accepted value is `16.10`.
+    
+  </Collapser>
+
+  <Collapser
     id="optional-fields"
     title="Define optional fields"
   >
-    Some fields are for more advanced configurations. These are optional.
+    Some fields are for more advanced configurations. These are optional unless otherwise indicated.
 
-    For [ping monitors](#create-ping), these include:
+    For [ping monitors](#create-ping-options), these include:
 
       * `HEADER_NAME`: Your custom header names that appear on the request.
 
@@ -114,64 +167,30 @@ You can view field definitions in [NerdGraph explorer](/docs/apis/nerdgraph/get-
       * `BYPASS_HEAD_REQUEST`: Bypasses the initial HEAD request and instead makes a GET request.
 
 
-    For [simple browser monitors](#create-simple-browser):
+    For [simple browser monitors](#create-simple-browser-options), these include:
 
-      * `RUNTIME_TYPE`: The runtime type used by your monitor. "CHROME_BROWSER" is the only accepted value.
+      * `HEADER_NAME`: Your custom header names that appear on the request.
 
-      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. "100" is the only accepted value.
+      * `HEADER_VALUE`: The custom header value on the request.
 
-      * `SCRIPT_LANGUAGE`: The language used in your monitor. "JAVASCRIPT" is the only accepted value.
+      * `VALIDATION_TEXT`: If this text is not included in your monitor's response, it returns a failure.
 
-
-    For [scripted API monitors](#create-scripted-API):
-
-      * `SCRIPT_CONTENT`: The actual contents of the script. This should **not** be based64 encoded.
-
-      * `RUNTIME_TYPE`: The runtime type used by your monitor. "NODE_API" is the only accepted value.
-
-      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. The only accepted value is `16.10`.
-
-      * `SCRIPT_LANGUAGE`: The language used in your monitor. "JAVASCRIPT" is the only accepted value.
+      * `TLS_VALIDATION`: Verifies the [validity](/docs/synthetics/synthetic-monitoring/using-monitors/add-edit-monitors/#simple) of the SSL certificate chain.
 
 
-    For [scripted browser monitors](#create-scripted-browser):
+    For [scripted API monitors](#create-scripted-API-runtime):
 
-      * `SCRIPT_CONTENT`: The actual contents of the script. This should **not** be based64 encoded.
-
-      * `RUNTIME_TYPE`: The runtime type used by your monitor. "CHROME_BROWSER" is the only accepted value.
-
-      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. "100" is the only accepted value.
-
-      * `SCRIPT_LANGUAGE`: The language used in your monitor. "JAVASCRIPT" is the only accepted value.
+      * `SCRIPT_CONTENT`: The actual contents of the script. This should **not** be based64 encoded (required).
 
 
-    For [step monitors](#create-step):
+    For [scripted browser monitors](#create-scripted-browser-runtime):
 
-      * `RUNTIME_TYPE`: The runtime type used by your monitor. "CHROME_BROWSER" is the only accepted value.
-
-      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. "100" is the only accepted value.
-
-      * `SCRIPT_LANGUAGE`: The language used in your monitor. "JAVASCRIPT" is the only accepted value.
+      * `SCRIPT_CONTENT`: The actual contents of the script. This should **not** be based64 encoded (required).
 
 
-    For [certificate check monitors](#create-certificate-check):
+    For [certificate check monitors](#create-certificate-check-runtime):
 
-      * `DAYS_UNTIL_EXPIRATION`: Notifies you when you need to update your certificate. For example, if you wanted a notification 30 days before the certificate expires, you would input 30.
-
-      * `RUNTIME_TYPE`: The runtime type used by your monitor. "NODE_API" is the only accepted value.
-
-      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. The only accepted value is `16.10`.
-
-      * `SCRIPT_LANGUAGE`: The language used in your monitor. "JAVASCRIPT" is the only accepted value.
-
-
-    For [broken link monitors](#create-broken-links):
-
-      * `RUNTIME_TYPE`: The runtime type used by your monitor. "NODE_API" is the only accepted value.
-
-      * `RUNTIME_TYPE_VERSION`: The runtime type version used by your monitor. The only accepted value is `16.10`.
-
-      * `SCRIPT_LANGUAGE`: The language used in your monitor. "JAVASCRIPT" is the only accepted value.
+      * `DAYS_UNTIL_EXPIRATION`: Notifies you when you need to update your certificate. For example, if you wanted a notification 30 days before the certificate expires, you would input 30 (required).
       
 
     For all monitors:
@@ -500,9 +519,9 @@ Below are some sample requests to automate the creation of your synthetic monito
             name: "YOUR_MONITOR_NAME", 
             period: PERIOD, 
             runtime: {
-              runtimeType: "RUNTIME_TYPE",
-              runtimeTypeVersion: "RUNTIME_TYPE_VERSION",
-              scriptLanguage: "SCRIPT_LANGUAGE"
+              runtimeType: "CHROME_BROWSER",
+              runtimeTypeVersion: "100",
+              scriptLanguage: "JAVASCRIPT"
             }
             status: STATUS, 
             uri: "MONITORED_URI", 
@@ -545,9 +564,9 @@ Below are some sample requests to automate the creation of your synthetic monito
             name: "MONITOR_NAME", 
             period: PERIOD,
             runtime: {
-              runtimeType: "RUNTIME_TYPE",
-              runtimeTypeVersion: "RUNTIME_TYPE_VERSION",
-              scriptLanguage: "SCRIPT_LANGUAGE"
+              runtimeType: "CHROME_BROWSER",
+              runtimeTypeVersion: "100",
+              scriptLanguage: "JAVASCRIPT"
             }
             script: "SCRIPT_CONTENT", 
             status: STATUS, 
@@ -583,9 +602,9 @@ Below are some sample requests to automate the creation of your synthetic monito
             name: "YOUR_MONITOR_NAME", 
             period: PERIOD,
             runtime: {
-              runtimeType: "RUNTIME_TYPE",
-              runtimeTypeVersion: "RUNTIME_TYPE_VERSION",
-              scriptLanguage: "SCRIPT_LANGUAGE"
+              runtimeType: "NODE_API",
+              runtimeTypeVersion: "16.10",
+              scriptLanguage: "JAVASCRIPT"
             }
             script: "SCRIPT_CONTENT", 
             status: STATUS, 
@@ -620,9 +639,9 @@ Below are some sample requests to automate the creation of your synthetic monito
         name: "MONITOR_NAME", 
         period: PERIOD, 
         runtime: {
-          runtimeType: "RUNTIME_TYPE",
-          runtimeTypeVersion: "RUNTIME_TYPE_VERSION",
-          scriptLanguage: "SCRIPT_LANGUAGE"
+          runtimeType: "CHROME_BROWSER",
+          runtimeTypeVersion: "100",
+          scriptLanguage: "JAVASCRIPT"
           }
         status: STATUS, 
         steps: [{
@@ -774,7 +793,7 @@ While you can't change the monitor type after creating it, you can update its se
     ```
       mutation {
         syntheticsUpdateSimpleBrowserMonitor (
-          guid: ENTITY_GUID, 
+          guid: "ENTITY_GUID", 
           monitor: {
             browsers: [BROWSERS],
             devices: [DEVICES], 
@@ -786,7 +805,7 @@ While you can't change the monitor type after creating it, you can update its se
             runtime: {
               runtimeType: "RUNTIME_TYPE",
               runtimeTypeVersion: "RUNTIME_TYPE_VERSION",
-              scriptLanguage: "SCRIPT_LANGUAGE"
+              scriptLanguage: "JAVASCRIPT"
             }
             status: STATUS, 
             uri: "MONITORED_URI", 
@@ -819,7 +838,7 @@ While you can't change the monitor type after creating it, you can update its se
     ```
       mutation {
         syntheticsUpdateScriptBrowserMonitor (
-          guid: ENTITY_GUID, 
+          guid: "ENTITY_GUID", 
           monitor: { 
             browsers: [BROWSERS],
             devices: [DEVICES], 
@@ -831,7 +850,7 @@ While you can't change the monitor type after creating it, you can update its se
             runtime: {
               runtimeType: "RUNTIME_TYPE",
               runtimeTypeVersion: "RUNTIME_TYPE_VERSION",
-              scriptLanguage: "SCRIPT_LANGUAGE"
+              scriptLanguage: "JAVASCRIPT"
             }
             script: "SCRIPT_CONTENT", 
             status: STATUS, 
@@ -869,7 +888,7 @@ While you can't change the monitor type after creating it, you can update its se
             runtime: {
               runtimeType: "RUNTIME_TYPE",
               runtimeTypeVersion: "RUNTIME_TYPE_VERSION",
-              scriptLanguage: "SCRIPT_LANGUAGE"
+              scriptLanguage: "JAVASCRIPT"
             }
             script: "SCRIPT_CONTENT", 
             status: STATUS, 
@@ -895,7 +914,7 @@ While you can't change the monitor type after creating it, you can update its se
     ```
     mutation {
       syntheticsUpdateStepMonitor (
-        guid: ENTITY_GUID, 
+        guid: "ENTITY_GUID", 
         monitor: {
           browsers: [BROWSERS],
           devices: [DEVICES], 
@@ -907,7 +926,7 @@ While you can't change the monitor type after creating it, you can update its se
           runtime: {
             runtimeType: "RUNTIME_TYPE",
             runtimeTypeVersion: "RUNTIME_TYPE_VERSION",
-            scriptLanguage: "SCRIPT_LANGUAGE"
+            scriptLanguage: "JAVASCRIPT"
             }
           status: STATUS, 
           steps: [{
@@ -943,7 +962,7 @@ While you can't change the monitor type after creating it, you can update its se
     ```
       mutation {
         syntheticsUpdateCertCheckMonitor (
-          guid: ENTITY_GUID, 
+          guid: "ENTITY_GUID", 
           monitor: {
             domain: "DOMAIN", 
             locations: {
@@ -974,7 +993,7 @@ While you can't change the monitor type after creating it, you can update its se
     ```
     mutation {
       syntheticsUpdateBrokenLinksMonitor (
-        guid: ENTITY_GUID, 
+        guid: "ENTITY_GUID", 
         monitor: {
           locations: {
             public: ["LOCATION_1", "LOCATION_2"]
@@ -1013,12 +1032,12 @@ While you can't change the monitor type after creating it, you can update its se
     ```
     mutation {
       syntheticsUpdateScriptBrowserMonitor ( 
-        guid: "<ENTITY_GUID>", 
+        guid: "ENTITY_GUID", 
         monitor: {
           runtime: {
             runtimeType: "RUNTIME_TYPE", 
             runtimeTypeVersion: "RUNTIME_TYPE_VERSION", 
-            scriptLanguage: "SCRIPT_LANGUAGE"
+            scriptLanguage: "JAVASCRIPT"
             }
           }
         ) {
@@ -1121,7 +1140,7 @@ A [private location](/docs/synthetics/synthetic-monitoring/private-locations/pri
     ```
     mutation {
       syntheticsUpdatePrivateLocation (
-        guid: YOUR_ENTITY_GUID,     
+        guid: "YOUR_ENTITY_GUID",     
         description: "EnterYourDescription", 
         verifiedScriptExecution: true
       ) {
@@ -1143,7 +1162,7 @@ A [private location](/docs/synthetics/synthetic-monitoring/private-locations/pri
     ```
     mutation {
       syntheticsDeletePrivateLocation (
-        guid: YOUR_ENTITY_GUID
+        guid: "YOUR_ENTITY_GUID"
         ) {
         errors {
           description
@@ -1163,7 +1182,7 @@ A [private location](/docs/synthetics/synthetic-monitoring/private-locations/pri
     ```
     mutation {
       syntheticsPurgePrivateLocationQueue (
-        guid: YOUR_ENTITY_GUID
+        guid: "YOUR_ENTITY_GUID"
         ) {
         errors {
           description
@@ -1187,7 +1206,7 @@ You use [secure credentials](/docs/synthetics/synthetic-monitoring/using-monitor
     ```
     mutation {
       syntheticsCreateSecureCredential (
-        accountId: YOUR_ENTITY_GUID, 
+        accountId: YOUR_ACCOUNT_ID, 
         description: "YourOptionalDescription", 
         key: SECURE_CREDENTIAL_NAME, 
         value: SECURE_CREDENTIAL_VALUE 
@@ -1470,7 +1489,7 @@ Monitor downtimes let you specify times that your synthetics should stop running
     ```
     mutation {
       syntheticsDeleteMonitorDowntime (
-        guid: DOWNTIME_ENTITY_GUID
+        guid: "DOWNTIME_ENTITY_GUID"
       ) {
         guid
       }
